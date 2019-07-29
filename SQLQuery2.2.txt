@@ -1,0 +1,93 @@
+--three level logic(true,false,null)
+select lastname,firstname,region
+from dbo.Employees
+where region is null;
+
+--And requires both condition are true
+select lastname,city,postalcode
+from dbo.Employees
+where city ='seattle' AND postalcode like '9%'
+
+--OR used one condition to be true
+select lastname,city,postalcode
+from dbo.employees
+where city='seatle' OR postalcode like '9%'
+
+--not negates expression
+select lastname,city,postalcode
+from dbo.employees
+where city NOT like 'london' 
+
+--operator procedure(AND,OR,NOT)
+select lastname,city,postalcode
+from dbo.Employees
+where lastname like '%s%'
+AND city not like 'seattle';
+
+--in cause
+--one way do it
+select customerid,country
+from dbo.customers
+where country='france' OR country='spain'
+
+select customerid,country
+from dbo.customers
+where country like'%u%'
+
+
+--use in matching list of elements
+select customerid,country
+from dbo.customers
+where country in('spain','france')
+
+
+--nested sub query
+select customerid,country
+from dbo.Customers
+where country in(select distinct country
+from dbo.customers 
+where country like 'u%')
+
+--IN with a sub query(returns a list of elements)
+select customerid
+from dbo.customers
+where customerid not in(select distinct customerid from dbo.orders);
+
+
+-----------------------JOIN-----------------------------------------
+create table customer(customerid int not null primary key,name varchar(20),cphone nvarchar(20))
+
+create table orderss(orid int primary key,customerid int ,product varchar(20),quantity int )
+
+insert into customer(customerid,name,cphone) values (10,'vicky','9952666093')
+insert into customer(customerid,name,cphone) values (11,'hassan','9953666093')
+
+select * from customer
+
+insert into orderss(orid,customerid,product,quantity) values(123,10,'mouse',1)
+insert into orderss(orid,customerid,product,quantity) values(124,11,'keyboard',1)
+insert into orderss(orid,customerid,product,quantity) values(125,14,'phone',1)
+
+select * from orderss
+
+--cross join
+select * from customer c cross join orderss o
+
+--cross join differently
+select * from customer ,orderss
+
+--cross join with condition(inner join for a)
+select * from customer c cross join orderss o where c.customerid=o.customerid
+
+--a simple inner join
+select * from  customer  join orderss on customer.customerid=orderss.customerid
+
+-- another way to inner join without join keyword
+select * from customer,orderss where customer.customerid=orderss.customerid
+
+--another way to inner join
+select * from customer c inner join orderss o on c.customerid=o.customerid
+
+--show only selective coulmns using join
+
+

@@ -1,0 +1,57 @@
+select count(*)
+from dbo.employees
+
+--sorting demo
+select lastname,city
+from dbo.employees
+order by city
+
+--sorting in desending order
+select lastname,city
+from dbo.Employees
+order by city desc
+
+--sorting in multiple columns (asc,optional)
+select lastname,city
+from dbo.employees
+order by city desc ,lastname ASC
+
+--sorting on expression
+select lastname,city
+from dbo.employees
+order by LEN(city)
+
+--------Aggregate Functions-------------------------
+--counting rows
+
+select count(*)
+from dbo.employees
+
+--counting values in a coulmn
+--count(*) is efficient
+
+select count(*) AS numemployees,
+count(region) AS numregion
+from dbo.employees
+
+--counting with where
+select count(*) AS numemployees
+from dbo.employees
+where city='london'
+
+--grouping results
+--need num of emp each city
+
+select city,count(*) as numemployees
+from dbo.employees
+group by city
+
+--using aggregate every field you have in the select list,that is not part of the aggregate function
+
+--order by with group by
+select city,count(*) as numemployees
+from dbo.employees
+group by city
+order by count(*) desc,city
+
+
